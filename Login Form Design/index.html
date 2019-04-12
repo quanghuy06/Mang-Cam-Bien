@@ -1,11 +1,11 @@
 <html>
 <head>
 <title>Login Form Design</title>
-    <style type="text/css"> 
-    body{
+    <style type="text/css">
+        body{
     margin: 0;
     padding: 0;
-    background: url("https://images.wallpaperscraft.com/image/coffee_foam_beverage_cup_saucer_creative_continents_84944_1920x1080.jpg");
+    background: url(pic1.jpg);
     background-size: cover;
     background-position: center;
     font-family: sans-serif;
@@ -88,16 +88,21 @@ h1{
 {
     color: #ffc107;
 }
-</style>
+    </style>
 <body>
     <div class="loginbox">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Posts_%26_Telecoms_Institute_of_Technology_logo.jpg/200px-Posts_%26_Telecoms_Institute_of_Technology_logo.jpg" class="avatar">
+    <img src="ptit.png" class="avatar">
         <h1>Login Here</h1>
-            <form action="auth" method="POST">
-                <input type="text" name="username" placeholder="Username" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <input type="submit">
-            </form>
+        <form>
+            <p>Username</p>
+            <input type="text" name="" placeholder="Enter Username">
+            <p>Password</p>
+            <input type="password" name="" placeholder="Enter Password">
+            <input type="submit" name="" value="Login">
+            <a href="#">Lost your password?</a><br>
+            <a href="#">Don't have an account?</a>
+        </form>
+        
     </div>
 
 </body>

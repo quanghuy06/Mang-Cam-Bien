@@ -5,30 +5,47 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 	.rectangle {
-	  height: 50px;
-	  width: 100px;
-	  background-color: blue;
-          float: left;
-	  margin-left: 20%;
+	  height: 300px;
+	  width: 300px;
+	  background: url("http://iotmonk.com/wp-content/uploads/2017/07/humidity-300x300.png"); 
+      float: left;
+	  position:relative;
+	}
+
+	</style>
+
+	<style>
+	.rectangle1 {
+	  height: 300px;
+	  width: 300px;
+	  background: url("http://iotmonk.com/wp-content/uploads/2017/07/temperature-300x300.png");
+      float: left;
+	  margin-left: 10%;
 	  position:relative;
 	}
 	</style>
+
 	<style>
-	.switch {
+	.rectangle2 {
+	  height: 300px;
+	  width: 300px;
+	  background: url("http://www.logospng.com/images/12/websites-logos-12022.png"); 
+      float: left;
+	  margin-left: 10%;
+	  position:relative;
+	}
+	</style>
+
+	<style>
+
+		.switch {
 	  position: relative;
 	  display: inline-block;
-	  width: 60px;
+	  width: 90px;
 	  height: 34px;
-	  margin-left:10%;
-	  margin-right:10%;
-	  float:left;
 	}
 
-	.switch input { 
-	  opacity: 0;
-	  width: 0;
-	  height: 0;
-	}
+	.switch input {display:none;}
 
 	.slider {
 	  position: absolute;
@@ -37,7 +54,7 @@
 	  left: 0;
 	  right: 0;
 	  bottom: 0;
-	  background-color: #ccc;
+	  background-color: #ca2222;
 	  -webkit-transition: .4s;
 	  transition: .4s;
 	}
@@ -55,7 +72,7 @@
 	}
 
 	input:checked + .slider {
-	  background-color: #2196F3;
+	  background-color: #2ab934;
 	}
 
 	input:focus + .slider {
@@ -63,10 +80,35 @@
 	}
 
 	input:checked + .slider:before {
-	  -webkit-transform: translateX(26px);
-	  -ms-transform: translateX(26px);
-	  transform: translateX(26px);
+	  -webkit-transform: translateX(55px);
+	  -ms-transform: translateX(55px);
+	  transform: translateX(55px);
 	}
+
+	/*------ ADDED CSS ---------*/
+	.on
+	{
+	  display: none;
+	}
+
+	.on, .off
+	{
+	  color: white;
+	  position: absolute;
+	  transform: translate(-50%,-50%);
+	  top: 50%;
+	  left: 50%;
+	  font-size: 10px;
+	  font-family: Verdana, sans-serif;
+	}
+
+	input:checked+ .slider .on
+	{display: block;}
+
+	input:checked + .slider .off
+	{display: none;}
+
+	/*--------- END --------*/
 
 	/* Rounded sliders */
 	.slider.round {
@@ -74,70 +116,67 @@
 	}
 
 	.slider.round:before {
-	  border-radius: 50%;
+	  border-radius: 50%;}
+	h1{
+		text-align: center;
 	}
 	</style>
 <style>
 .slidecontainer {
-  width: 100%;
+	margin-top: 80px;
+  	width: 35%;
+  	height: 200px;
+  	clear: left;
+  	float: right;
+  	text-align: center;
 }
 
-.slider_s {
-  -webkit-appearance: none;
-  width: 20%;
-  height: 25px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider_s:hover {
-  opacity: 1;
-}
-
-.slider_s::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
-}
-
-.slider_s::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #4CAF50;
-  cursor: pointer;
+</style>
+<style>
+body { 
+  background: url("https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"); 
 }
 </style>
-
-
-    </head>
+<meta charshet="utf-8" />
+</head>
     <body>
-        <h1> VU HAI LONG - B15DCDT121</h1>
+        <h1> THỰC HÀNH CHUYÊN SÂU </h1>
+	<div id="hum" class="rectangle"><h1>Hum Value</h1>
+		<center><h1><p id='humidity'>0</p></h1></center>
+	</div>
+	<div id="illu" class="rectangle1"><h1>Light Value</h1>
+		<center><h1><p id='Light'>0</p></h1></center>
+	</div>
+	<div id="temp" class="rectangle2"><h1>Temp Value</h1>
+		<center><h1><p id='temperature'>0</p></h1></center>
+	</div>
 	
-	<div id="hum" class="rectangle">Hum
-		<center><p id='humidity'>0</p></center>
-	</div>
-	<div id="temp" class="rectangle">Temp
-		<center><p id='temperature'>0</p></center>
-	</div>
-	<div id="illu" class="rectangle">Illu
-		<center><p id='illumination'>0</p></center>
-	</div>
 	
+	<div class="slidecontainer">
+	 	<input type="range" min="0" max="255" value="50" id="myRange" onchange="updateSlider(this.value)">
+	 	<p>PWM Speaker</p>
 
-        <div class="chart-container" style="position: relative; width:60%;margin:auto; ">
+	 	<label class="switch"><input id='led1' type="checkbox" onclick="calc_led1()"><div class="slider round"><!--ADDED HTML -->
+	 	<span class="on">OFF</span><span class="off">ON</span><!--END--></div>
+	 	</label>
+	 	<p>LED 1</p>
+
+
+	 	<label class="switch"><input id='led2' type="checkbox" onclick="calc_led2()"><div class="slider round"><!--ADDED HTML -->
+	 	<span class="on">OFF</span><span class="off">ON</span><!--END--></div>
+	 	</label>
+	 	<p>LED 2</p>
+
+	</div>
+
+        <div class="chart-container" style="position: relative; width:60%; ">
             <canvas id="myChart"></canvas>
         </div>
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
-            var socket = io.connect('http://localhost:2000'); //connect to server
+            var socket = io.connect('http://localhost:3000'); //connect to server
 
             var ctx = document.getElementById('myChart').getContext('2d');
             var chart = new Chart(ctx, {
@@ -148,37 +187,25 @@
                 data: {
                 labels: [],
                 datasets: [{
-                    label: "Temperature",
-                    borderColor: "blue",
+                    label: "Temp Value",
+                    borderColor: "teal",
                     data: [],
                     fill: false,
-                    pointStyle: 'circle',
-                    backgroundColor: 'blue',
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                    lineTension: 0,
+                    backgroundColor: 'teal',
                 },
 				{
-                    label: "Humidity",
-                    borderColor: "#FF0000",
+                    label: "Hum Value",
+                    borderColor: "navy",
                     data: [],
                     fill: false,
-                    pointStyle: 'circle',
-                    backgroundColor: '#FF0000',
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                    lineTension: 0,
+                    backgroundColor: 'navy',
 				},
 				{
-                    label: "Illumination",
-                    borderColor: "green",
+                    label: "Light Value",
+                    borderColor: "yellow",
                     data: [],
                     fill: false,
-                    pointStyle: 'circle',
-                    backgroundColor: 'green',
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                    lineTension: 0,
+                    backgroundColor: 'yellow',
                 }
 				]
                 },
@@ -194,11 +221,34 @@
 				var my_data = [data.temp , data.hum, data.illu ];
 				console.log(my_data);
 				var index = 0;
-
+				
                 document.getElementById('temperature').innerHTML = data.temp; //update the date
+                if(data.temp < 30){
+                	document.getElementById('temperature').style.backgroundColor = '#8e0101';
+                } 
+                if(data.temp >= 30){
+                	document.getElementById('temperature').style.backgroundColor = '#f70404';
+                } 
                 document.getElementById('humidity').innerHTML = data.hum; //update the date
-                document.getElementById('illumination').innerHTML = data.illu; //update the date
-
+                if(data.hum < 50){
+                	document.getElementById('humidity').style.backgroundColor = '#035403';
+                }
+                if(data.hum > 50 && data.hum < 75){
+                	document.getElementById('humidity').style.backgroundColor = '#04a504';
+                }
+                if(data.hum > 80){
+                	document.getElementById('humidity').style.backgroundColor = '#04f704';
+                }
+                document.getElementById('Light').innerHTML = data.illu; //update the date
+                if(data.illu < 20){
+                	document.getElementById('Light').style.backgroundColor = '#969601';
+                }
+                if(data.illu > 20 && data.illu < 100){
+                	document.getElementById('Light').style.backgroundColor = '#cece04';
+                }
+                if(data.illu > 300){
+                	document.getElementById('Light').style.backgroundColor = '#f9f907';
+                }
                 if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
                     chart.data.labels.push(data.time);  //Add time in x-asix
                     chart.data.datasets.forEach((dataset) => {
@@ -234,38 +284,7 @@
 	    }
         </script>
     </body>
-    <style>
-        h1 {
-            text-align: center;
-            font-family: 'Lato', sans-serif;
-        }
 
-        h4 {
-            text-align: center;
-            font-family: 'Lato', sans-serif;
-        }
-
-        p {
-            text-align: center;
-            font-family: 'Lato', sans-serif;
-        }
-
-    </style>
-	
-	<label class="switch">
-	<input id='led1' type="checkbox" onclick="calc_led1()">
-	<span class="slider"></span>
-	
-	</label>
-	<label  class="switch" >
-	<input id='led2' type="checkbox" onclick="calc_led2()">
-	<span class="slider"></span>
-	</label>
-	
-	<div class="slidecontainer">
-	  LED1 PWM
-	  <input type="range" min="0" max="255" value="50" class="slider_s" id="myRange" onchange="updateSlider(this.value)">
-	</div>
 
 
 

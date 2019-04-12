@@ -3,25 +3,22 @@
 #include <PubSubClient.h>
 
 
-#define DHTPIN 2
+#define DHTPIN 0
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 #define led1 D6
-#define led2 D5
-
+#define led2 D7
+#define speaker D2
 // Replace the next variables with your SSID/Password combination
-const char* ssid = "Nam_Ptit";
-const char* password = "namptit1997";
+const char* ssid = "Ptit Team";
+const char* password = "1mot2hai3ba";
 
-const char* mqtt_server = "172.20.10.2";
+const char* mqtt_server = "192.168.1.211";
 
 WiFiClient espClient;
 PubSubClient client(espClient);  
 
 int sensor = A0;
-
-long lastMsg = 0;
-char msg[50];
 int value = 0;
 void setup_wifi() {
   delay(10);
@@ -54,7 +51,7 @@ void callback(char* topic, byte* message, unsigned int length) {
     messageTemp += (char)message[i];
   }
   Serial.println();
-  if (String(topic) == "esp32/output1") {
+  if (String(topic) == "Topic 1") {
       Serial.print("setup led1 ");
       if (strcmp(messageTemp.c_str(),"true")==0)
         digitalWrite(led1,1);
@@ -62,7 +59,7 @@ void callback(char* topic, byte* message, unsigned int length) {
         digitalWrite(led1,0);
       Serial.println(messageTemp);
   }
-  if (String(topic) == "esp32/output2") {
+  if (String(topic) == "Topic 2") {
       Serial.print("setup led2 ");
       if (strcmp(messageTemp.c_str(),"true")==0) 
         digitalWrite(led2,1);
@@ -70,10 +67,10 @@ void callback(char* topic, byte* message, unsigned int length) {
         digitalWrite(led2,0);
       Serial.println(messageTemp);
   }
-  if (String(topic) == "esp32/output3") {
+  if (String(topic) == "Topic 3") {
       Serial.print("setup led1 pwm ");
       Serial.println(messageTemp.toInt());
-      analogWrite(led2,messageTemp.toInt());
+      analogWrite(speaker,messageTemp.toInt());
   }
 }
 
@@ -85,9 +82,9 @@ void reconnect() {
     if (client.connect("ESP8266Client","huynam","huynam")) {
       Serial.println("connected");
       // Subscribe
-      client.subscribe("esp32/output1");
-      client.subscribe("esp32/output2");
-      client.subscribe("esp32/output3");
+      client.subscribe("Topic 1");
+      client.subscribe("Topic 2");
+      client.subscribe("Topic 3");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -119,8 +116,8 @@ void loop()
  int humidity = dht.readHumidity();
  int temperature = dht.readTemperature();
 
- Serial.print("Sensor: "); 
- Serial.print(value);
+// Serial.print("Sensor: "); 
+// Serial.print(value);
   if (!client.connected()) {
     reconnect();
   }
@@ -139,8 +136,8 @@ void loop()
   client.publish("home/sensors/humidity", humString);
 
   char Illumination[8];
-    sprintf(Illumination, "%d", value);
-  Serial.print("Illumination: ");
+  sprintf(Illumination, "%d", value);
+  Serial.print("  Value Light: ");
   Serial.println(Illumination);
   client.publish("home/sensors/illumination", Illumination);
   

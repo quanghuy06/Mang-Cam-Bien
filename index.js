@@ -11,9 +11,9 @@ app.engine('html', require('ejs').renderFile);
 
 var count = 0;
 var client = mqtt.connect("mqtt://localhost:1883",{clientId:"mqttjs01",username:"huynam",password:"huynam"});
-var topic1 = "esp32/output1";
-var topic2 = "esp32/output2";
-var topic3 = "esp32/output3";
+var topic1 = "Topic 1";
+var topic2 = "Topic 2";
+var topic3 = "Topic 3";
 var message="test message";
 var topic_list=["home/sensors/temperature","home/sensors/humidity","home/sensors/illumination"];
 
@@ -38,8 +38,8 @@ Date.prototype.toMysqlFormat = function() {
     return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 };
 
-var server = app.listen(2000, () => { //Start the server, listening on port 4000.
-    console.log("Conect to requests on port 2000...");
+var server = app.listen(3000, () => { //Start the server, listening on port 3000.
+    console.log("Conect to requests on port 3000...");
 })
 
 var connection = mysql.createConnection({
@@ -84,7 +84,7 @@ app.use((request, response, next) => {
   request.chance = Math.random()
   next()
 })
-
+app.use(express.static('public')); //Send index.html page on GET /
 
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/login.html'));
@@ -113,7 +113,7 @@ app.post('/auth', function(request, response) {
 				request.session.username = username;
 				response.redirect('/home');
 			} else {
-				response.send('Incorrect Username and/or Password!');
+				response.send('No Connect Account!');
 
 			}			
 			response.end();
@@ -155,9 +155,9 @@ io.on('connection', (socket) => {
 	});
 	
 })
-var Temp = 12;
-var Hum = 120;
-var Illumination = 123; 
+var Temp ;
+var Hum ;
+var Illumination ; 
 
 var cnt_check = 0;
 
