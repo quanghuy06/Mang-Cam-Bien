@@ -3,17 +3,17 @@
 #include <PubSubClient.h>
 
 
-#define DHTPIN 0
+#define DHTPIN 2
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 #define led1 D6
 #define led2 D7
-#define speaker D2
+#define speaker 0
 // Replace the next variables with your SSID/Password combination
-const char* ssid = "Ptit Team";
-const char* password = "1mot2hai3ba";
+const char* ssid = "Happy Home";
+const char* password = "dat251144";
 
-const char* mqtt_server = "192.168.1.211";
+const char* mqtt_server = "192.168.1.106";
 
 WiFiClient espClient;
 PubSubClient client(espClient);  

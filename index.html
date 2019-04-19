@@ -5,10 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 	.rectangle {
-	  height: 300px;
-	  width: 300px;
-	  background: url("http://iotmonk.com/wp-content/uploads/2017/07/humidity-300x300.png"); 
-      float: left;
+	  height: 100px;
+	  width: 100px;
+	  background-color: blue;
+          float: left;
+	  margin-left: 20%;
 	  position:relative;
 	}
 
@@ -16,22 +17,22 @@
 
 	<style>
 	.rectangle1 {
-	  height: 300px;
-	  width: 300px;
-	  background: url("http://iotmonk.com/wp-content/uploads/2017/07/temperature-300x300.png");
-      float: left;
-	  margin-left: 10%;
+	  height: 100px;
+	  width: 100px;
+	  background-color: blue;
+          float: left;
+	  margin-left: 20%;
 	  position:relative;
 	}
 	</style>
 
 	<style>
 	.rectangle2 {
-	  height: 300px;
-	  width: 300px;
-	  background: url("http://www.logospng.com/images/12/websites-logos-12022.png"); 
-      float: left;
-	  margin-left: 10%;
+	  height: 100px;
+	  width: 100px;
+	  background-color: blue;
+          float: left;
+	  margin-left: 20%;
 	  position:relative;
 	}
 	</style>
@@ -141,14 +142,14 @@ body {
 </head>
     <body>
         <h1> THỰC HÀNH CHUYÊN SÂU </h1>
-	<div id="hum" class="rectangle"><h1>Hum Value</h1>
-		<center><h1><p id='humidity'>0</p></h1></center>
+	<div id="hum" class="rectangle">Hum Value
+		<center><p id='humidity'>0</p></center>
 	</div>
-	<div id="illu" class="rectangle1"><h1>Light Value</h1>
-		<center><h1><p id='Light'>0</p></h1></center>
+	<div id="illu" class="rectangle1">Light Value
+		<center><p id='Light'>0</p></center>
 	</div>
-	<div id="temp" class="rectangle2"><h1>Temp Value</h1>
-		<center><h1><p id='temperature'>0</p></h1></center>
+	<div id="temp" class="rectangle2">Temp Value
+		<center><p id='temperature'>0</p></center>
 	</div>
 	
 	
@@ -230,24 +231,24 @@ body {
                 	document.getElementById('temperature').style.backgroundColor = '#f70404';
                 } 
                 document.getElementById('humidity').innerHTML = data.hum; //update the date
-                if(data.hum < 50){
+                if(data.hum < 65){
                 	document.getElementById('humidity').style.backgroundColor = '#035403';
                 }
-                if(data.hum > 50 && data.hum < 75){
+                if(data.hum > 65 && data.hum < 80){
                 	document.getElementById('humidity').style.backgroundColor = '#04a504';
                 }
                 if(data.hum > 80){
                 	document.getElementById('humidity').style.backgroundColor = '#04f704';
                 }
                 document.getElementById('Light').innerHTML = data.illu; //update the date
-                if(data.illu < 20){
-                	document.getElementById('Light').style.backgroundColor = '#969601';
+                if(data.illu < 30){
+                	document.getElementById('Light').style.backgroundColor = '#F4FA58';
                 }
-                if(data.illu > 20 && data.illu < 100){
+                if(data.illu > 30 && data.illu < 100){
                 	document.getElementById('Light').style.backgroundColor = '#cece04';
                 }
-                if(data.illu > 300){
-                	document.getElementById('Light').style.backgroundColor = '#f9f907';
+                if(data.illu > 150){
+                	document.getElementById('Light').style.backgroundColor = '#969601';
                 }
                 if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
                     chart.data.labels.push(data.time);  //Add time in x-asix
