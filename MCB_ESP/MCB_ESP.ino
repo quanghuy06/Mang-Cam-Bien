@@ -3,17 +3,17 @@
 #include <PubSubClient.h>
 
 
-#define DHTPIN 2
+#define DHTPIN 5
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
-#define led1 D6
-#define led2 D7
-#define speaker 0
+#define led1 D3
+#define led2 D6
+#define speaker D2
 // Replace the next variables with your SSID/Password combination
-const char* ssid = "Happy Home";
-const char* password = "dat251144";
+const char* ssid = "HUAWEI nova 2i";
+const char* password = "netbeanss";
 
-const char* mqtt_server = "192.168.1.106";
+const char* mqtt_server = "mqtt://postman.cloudmqtt.com";
 
 WiFiClient espClient;
 PubSubClient client(espClient);  
@@ -54,9 +54,9 @@ void callback(char* topic, byte* message, unsigned int length) {
   if (String(topic) == "Topic 1") {
       Serial.print("setup led1 ");
       if (strcmp(messageTemp.c_str(),"true")==0)
-        digitalWrite(led1,1);
-      else 
         digitalWrite(led1,0);
+      else 
+        digitalWrite(led1,1);
       Serial.println(messageTemp);
   }
   if (String(topic) == "Topic 2") {
@@ -68,7 +68,7 @@ void callback(char* topic, byte* message, unsigned int length) {
       Serial.println(messageTemp);
   }
   if (String(topic) == "Topic 3") {
-      Serial.print("setup led1 pwm ");
+      Serial.print("setup speaker pwm ");
       Serial.println(messageTemp.toInt());
       analogWrite(speaker,messageTemp.toInt());
   }
@@ -79,7 +79,7 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP8266Client","huynam","huynam")) {
+    if (client.connect("ESP8266Client","NguyenVinhHung","12345")) {
       Serial.println("connected");
       // Subscribe
       client.subscribe("Topic 1");
@@ -115,9 +115,6 @@ void loop()
  int value=analogRead(sensor);
  int humidity = dht.readHumidity();
  int temperature = dht.readTemperature();
-
-// Serial.print("Sensor: "); 
-// Serial.print(value);
   if (!client.connected()) {
     reconnect();
   }

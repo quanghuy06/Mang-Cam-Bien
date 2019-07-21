@@ -10,7 +10,7 @@ app.set('views', __dirname )
 app.engine('html', require('ejs').renderFile);
 
 var count = 0;
-var client = mqtt.connect("mqtt://localhost:1883",{clientId:"mqttjs01",username:"huynam",password:"huynam"});
+var client = mqtt.connect("mqtt://localhost:1883",{username:"huytq",password:"Quanghuy@123"});
 var topic1 = "Topic 1";
 var topic2 = "Topic 2";
 var topic3 = "Topic 3";
@@ -44,9 +44,9 @@ var server = app.listen(3000, () => { //Start the server, listening on port 3000
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
-	user     : 'root',
-	password : 'huynam',
-	database : 'thcsb4'
+	user     : 'huytq',
+	password : 'Quanghuy@123',
+	database : 'wsn'
 });
 
 connection.connect(function(err) {
